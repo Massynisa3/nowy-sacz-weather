@@ -300,6 +300,7 @@ HTML = f"""<!DOCTYPE html>
   .hdr-feels {{ font-size:12px; color:#6b7280; margin-top:3px; text-transform:uppercase; letter-spacing:.3px; }}
   .hdr-mid {{ margin-left:10px; }}
   .hdr-desc {{ font-size:28px; font-weight:700; color:#111827; }}
+  .hdr-location {{ font-size:12px; color:#6b7280; margin-bottom:4px; letter-spacing:.2px; }}
   .hdr-wind {{ font-size:14px; color:#6b7280; margin-top:5px; }}
   .hdr-right {{ text-align:right; min-width:180px; }}
   .conf-title {{ font-size:10px; font-weight:800; color:#2563eb; text-transform:uppercase; letter-spacing:.6px; }}
@@ -376,6 +377,7 @@ HTML = f"""<!DOCTYPE html>
         <div class="hdr-feels">Feels like {cur_feels}&#xB0;C</div>
       </div>
       <div class="hdr-mid">
+        <div class="hdr-location">&#x1F4CD; Nowy S&#x105;cz, Poland</div>
         <div class="hdr-desc">{cur_desc}</div>
         <div class="hdr-wind">&#x1F4A8; Wind {cur_wind} km/h</div>
       </div>
