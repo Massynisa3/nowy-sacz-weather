@@ -81,6 +81,15 @@
   .story-label { font-size:10px; font-weight:800; color:#2563eb; text-transform:uppercase; letter-spacing:.6px; margin-bottom:2px; }
   .story-text { font-size:11.5px; color:#4b5563; line-height:1.5; }
   .updated { font-size:9px; color:#d1d5db; text-align:center; padding:6px; background:#f8fafc; }
+  .lawn-rec { padding:14px 26px; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; gap:16px; }
+  .lawn-badge { font-size:36px; flex-shrink:0; }
+  .lawn-title { font-size:10px; font-weight:800; color:#2563eb; text-transform:uppercase; letter-spacing:.8px; margin-bottom:5px; }
+  .lawn-verdict { font-size:20px; font-weight:800; margin-bottom:4px; }
+  .lawn-green { color:#16a34a; }
+  .lawn-yellow { color:#d97706; }
+  .lawn-red { color:#dc2626; }
+  .lawn-meta { display:flex; flex-wrap:wrap; gap:18px; font-size:12px; color:#374151; margin-bottom:4px; font-weight:500; }
+  .lawn-reason { font-size:11px; color:#6b7280; line-height:1.45; }
 </style>
 </head>
 <body>
@@ -114,6 +123,19 @@
       <div><div class="ins-icon">&#x1F324;&#xFE0F;</div><div class="ins-label">Best window</div><div class="ins-val">THU morning &amp; FRI morning</div></div>
       <div><div class="ins-icon">&#x1F321;&#xFE0F;</div><div class="ins-label">Comfort</div><div class="ins-val">Cool mornings (8–11°C), mild afternoons</div></div>
       <div><div class="ins-icon">&#x26A0;&#xFE0F;</div><div class="ins-label">Watch out</div><div class="ins-val">Wet roads FRI afternoon</div></div>
+    </div>
+  </div>
+
+  <div class="lawn-rec" style="background:#fef2f2">
+    <div class="lawn-badge">&#x1F6AB;</div>
+    <div style="flex:1">
+      <div class="lawn-title">&#x1F33F; Podlewanie trawnika</div>
+      <div class="lawn-verdict lawn-red">Nie podlewaj</div>
+      <div class="lawn-meta">
+        <span>&#x1F558;&nbsp;&#x2014;</span>
+        <span>&#x1F4A7;&nbsp;&#x2014;</span>
+      </div>
+      <div class="lawn-reason">Deszcz prognozowany dzi&#x15B; (100&#x25; szans) &#x2014; trawnik sam si&#x119; nawodni.</div>
     </div>
   </div>
 
@@ -257,7 +279,7 @@
       <div class="story-text">Thu sees patchy rain with 100% chance at peak. Fri sees patchy rain with 69% chance at peak. Sat stays dry and calm, reaching 15°c.</div>
     </div>
   </div>
-  <div class="updated">Last updated: 07.05.2026 12:08 UTC</div>
+  <div class="updated">Last updated: 07.05.2026 12:15 UTC</div>
 </div>
 </body>
 </html>
