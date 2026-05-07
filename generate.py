@@ -214,46 +214,46 @@ tomorrow_rain_max = max(s["rain"] for s in tomorrow_slots)
 today_max_t       = int(days[0]["maxtempC"])
 
 if today_rain_max >= 60:
-    lawn_verdict = "Nie podlewaj"
+    lawn_verdict = "Skip watering"
     lawn_color   = "red"
     lawn_bg      = "#fef2f2"
     lawn_emoji   = "&#x1F6AB;"
     lawn_when    = "&#x2014;"
     lawn_amount  = "&#x2014;"
-    lawn_reason  = f"Deszcz prognozowany dzi&#x15B; ({today_rain_max}&#x25; szans) &#x2014; trawnik sam si&#x119; nawodni."
+    lawn_reason  = f"Rain forecast today ({today_rain_max}% chance) &#x2014; the lawn will water itself."
 elif tomorrow_rain_max >= 60:
-    lawn_verdict = "Poczekaj do jutra"
+    lawn_verdict = "Wait until tomorrow"
     lawn_color   = "yellow"
     lawn_bg      = "#fefce8"
     lawn_emoji   = "&#x23F3;"
     lawn_when    = "&#x2014;"
     lawn_amount  = "&#x2014;"
-    lawn_reason  = f"Jutro prognozowany deszcz ({tomorrow_rain_max}&#x25; szans) &#x2014; oszcz&#x119;d&#x17A; wod&#x119;."
+    lawn_reason  = f"Rain expected tomorrow ({tomorrow_rain_max}% chance) &#x2014; save the water."
 elif today_rain_max >= 30:
-    lawn_verdict = "Opcjonalnie"
+    lawn_verdict = "Optional"
     lawn_color   = "yellow"
     lawn_bg      = "#fefce8"
     lawn_emoji   = "&#x1F914;"
-    lawn_when    = "Wieczorem (18:00&#x2013;20:00)"
+    lawn_when    = "Evening (18:00&#x2013;20:00)"
     lawn_amount  = "5&#x2013;10 l/m&#xB2;"
-    lawn_reason  = f"Mo&#x17C;liwy lekki deszcz ({today_rain_max}&#x25;) &#x2014; podlej tylko je&#x15B;li gleba sucha."
+    lawn_reason  = f"Light rain possible ({today_rain_max}%) &#x2014; water only if the soil is dry."
 else:
-    lawn_verdict = "Podlej dzi&#x15B;"
+    lawn_verdict = "Water today"
     lawn_color   = "green"
     lawn_bg      = "#f0fdf4"
     lawn_emoji   = "&#x1F4A7;"
     if today_max_t >= 25:
-        lawn_when   = "Rano (6:00&#x2013;8:00) &#x2014; przed upa&#x142;em"
-        lawn_amount = "15&#x2013;20 l/m&#xB2; (~25 min zraszacz)"
-        lawn_reason = f"Gor&#x105;cy dzie&#x144; ({today_max_t}&#xB0;C), brak opad&#xF3;w &#x2014; podlewaj wcze&#x15B;nie rano, by unikn&#x105;&#x107; parowania."
+        lawn_when   = "Morning (6:00&#x2013;8:00) &#x2014; before the heat"
+        lawn_amount = "15&#x2013;20 l/m&#xB2; (~25 min sprinkler)"
+        lawn_reason = f"Hot day ({today_max_t}&#xB0;C), no rain &#x2014; water early to minimise evaporation."
     elif today_max_t >= 15:
-        lawn_when   = "Rano (6:00&#x2013;8:00) lub wieczorem (18:00&#x2013;20:00)"
-        lawn_amount = "10&#x2013;15 l/m&#xB2; (~15&#x2013;20 min zraszacz)"
-        lawn_reason = f"Sucho i {today_max_t}&#xB0;C &#x2014; optymalne warunki, unikaj podlewania w po&#x142;udnie."
+        lawn_when   = "Morning (6:00&#x2013;8:00) or evening (18:00&#x2013;20:00)"
+        lawn_amount = "10&#x2013;15 l/m&#xB2; (~15&#x2013;20 min sprinkler)"
+        lawn_reason = f"Dry and {today_max_t}&#xB0;C &#x2014; good conditions, avoid watering at midday."
     else:
-        lawn_when   = "Wieczorem (18:00&#x2013;20:00)"
-        lawn_amount = "5&#x2013;10 l/m&#xB2; (~10&#x2013;15 min zraszacz)"
-        lawn_reason = f"Ch&#x142;odny dzie&#x144; ({today_max_t}&#xB0;C) bez opad&#xF3;w &#x2014; ma&#x142;e podlewanie wystarczy."
+        lawn_when   = "Evening (18:00&#x2013;20:00)"
+        lawn_amount = "5&#x2013;10 l/m&#xB2; (~10&#x2013;15 min sprinkler)"
+        lawn_reason = f"Cool day ({today_max_t}&#xB0;C) with no rain &#x2014; a light watering is enough."
 
 # ── Temperature trend SVG ─────────────────────────────────────────────────
 max_t = [int(d["maxtempC"]) for d in days]
@@ -462,7 +462,7 @@ HTML = f"""<!DOCTYPE html>
   <div class="lawn-rec" style="background:{lawn_bg}">
     <div class="lawn-badge">{lawn_emoji}</div>
     <div style="flex:1">
-      <div class="lawn-title">&#x1F33F; Podlewanie trawnika</div>
+      <div class="lawn-title">&#x1F33F; Lawn Watering</div>
       <div class="lawn-verdict lawn-{lawn_color}">{lawn_verdict}</div>
       <div class="lawn-meta">
         <span>&#x1F558;&nbsp;{lawn_when}</span>
