@@ -206,6 +206,55 @@ act_rows = f"""
 <div class="act-row"><span class="act-name">&#x1F697; Driving</span>{rating_badge(drive_r, drive_note)}</div>
 """
 
+# ── Lawn watering recommendation ─────────────────────────────────────────
+today_slots    = [s for s in slots if s["day_idx"] == 0]
+tomorrow_slots = [s for s in slots if s["day_idx"] == 1]
+today_rain_max    = max(s["rain"] for s in today_slots)
+tomorrow_rain_max = max(s["rain"] for s in tomorrow_slots)
+today_max_t       = int(days[0]["maxtempC"])
+
+if today_rain_max >= 60:
+    lawn_verdict = "Nie podlewaj"
+    lawn_color   = "red"
+    lawn_bg      = "#fef2f2"
+    lawn_emoji   = "&#x1F6AB;"
+    lawn_when    = "&#x2014;"
+    lawn_amount  = "&#x2014;"
+    lawn_reason  = f"Deszcz prognozowany dzi&#x15B; ({today_rain_max}&#x25; szans) &#x2014; trawnik sam si&#x119; nawodni."
+elif tomorrow_rain_max >= 60:
+    lawn_verdict = "Poczekaj do jutra"
+    lawn_color   = "yellow"
+    lawn_bg      = "#fefce8"
+    lawn_emoji   = "&#x23F3;"
+    lawn_when    = "&#x2014;"
+    lawn_amount  = "&#x2014;"
+    lawn_reason  = f"Jutro prognozowany deszcz ({tomorrow_rain_max}&#x25; szans) &#x2014; oszcz&#x119;d&#x17A; wod&#x119;."
+elif today_rain_max >= 30:
+    lawn_verdict = "Opcjonalnie"
+    lawn_color   = "yellow"
+    lawn_bg      = "#fefce8"
+    lawn_emoji   = "&#x1F914;"
+    lawn_when    = "Wieczorem (18:00&#x2013;20:00)"
+    lawn_amount  = "5&#x2013;10 l/m&#xB2;"
+    lawn_reason  = f"Mo&#x17C;liwy lekki deszcz ({today_rain_max}&#x25;) &#x2014; podlej tylko je&#x15B;li gleba sucha."
+else:
+    lawn_verdict = "Podlej dzi&#x15B;"
+    lawn_color   = "green"
+    lawn_bg      = "#f0fdf4"
+    lawn_emoji   = "&#x1F4A7;"
+    if today_max_t >= 25:
+        lawn_when   = "Rano (6:00&#x2013;8:00) &#x2014; przed upa&#x142;em"
+        lawn_amount = "15&#x2013;20 l/m&#xB2; (~25 min zraszacz)"
+        lawn_reason = f"Gor&#x105;cy dzie&#x144; ({today_max_t}&#xB0;C), brak opad&#xF3;w &#x2014; podlewaj wcze&#x15B;nie rano, by unikn&#x105;&#x107; parowania."
+    elif today_max_t >= 15:
+        lawn_when   = "Rano (6:00&#x2013;8:00) lub wieczorem (18:00&#x2013;20:00)"
+        lawn_amount = "10&#x2013;15 l/m&#xB2; (~15&#x2013;20 min zraszacz)"
+        lawn_reason = f"Sucho i {today_max_t}&#xB0;C &#x2014; optymalne warunki, unikaj podlewania w po&#x142;udnie."
+    else:
+        lawn_when   = "Wieczorem (18:00&#x2013;20:00)"
+        lawn_amount = "5&#x2013;10 l/m&#xB2; (~10&#x2013;15 min zraszacz)"
+        lawn_reason = f"Ch&#x142;odny dzie&#x144; ({today_max_t}&#xB0;C) bez opad&#xF3;w &#x2014; ma&#x142;e podlewanie wystarczy."
+
 # ── Temperature trend SVG ─────────────────────────────────────────────────
 max_t = [int(d["maxtempC"]) for d in days]
 xs    = [50, 100, 150]
@@ -365,6 +414,15 @@ HTML = f"""<!DOCTYPE html>
   .story-label {{ font-size:10px; font-weight:800; color:#2563eb; text-transform:uppercase; letter-spacing:.6px; margin-bottom:2px; }}
   .story-text {{ font-size:11.5px; color:#4b5563; line-height:1.5; }}
   .updated {{ font-size:9px; color:#d1d5db; text-align:center; padding:6px; background:#f8fafc; }}
+  .lawn-rec {{ padding:14px 26px; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; gap:16px; }}
+  .lawn-badge {{ font-size:36px; flex-shrink:0; }}
+  .lawn-title {{ font-size:10px; font-weight:800; color:#2563eb; text-transform:uppercase; letter-spacing:.8px; margin-bottom:5px; }}
+  .lawn-verdict {{ font-size:20px; font-weight:800; margin-bottom:4px; }}
+  .lawn-green {{ color:#16a34a; }}
+  .lawn-yellow {{ color:#d97706; }}
+  .lawn-red {{ color:#dc2626; }}
+  .lawn-meta {{ display:flex; flex-wrap:wrap; gap:18px; font-size:12px; color:#374151; margin-bottom:4px; font-weight:500; }}
+  .lawn-reason {{ font-size:11px; color:#6b7280; line-height:1.45; }}
 </style>
 </head>
 <body>
@@ -398,6 +456,19 @@ HTML = f"""<!DOCTYPE html>
       <div><div class="ins-icon">&#x1F324;&#xFE0F;</div><div class="ins-label">Best window</div><div class="ins-val">{ins_best}</div></div>
       <div><div class="ins-icon">&#x1F321;&#xFE0F;</div><div class="ins-label">Comfort</div><div class="ins-val">{ins_comfort}</div></div>
       <div><div class="ins-icon">&#x26A0;&#xFE0F;</div><div class="ins-label">Watch out</div><div class="ins-val">{ins_watch}</div></div>
+    </div>
+  </div>
+
+  <div class="lawn-rec" style="background:{lawn_bg}">
+    <div class="lawn-badge">{lawn_emoji}</div>
+    <div style="flex:1">
+      <div class="lawn-title">&#x1F33F; Podlewanie trawnika</div>
+      <div class="lawn-verdict lawn-{lawn_color}">{lawn_verdict}</div>
+      <div class="lawn-meta">
+        <span>&#x1F558;&nbsp;{lawn_when}</span>
+        <span>&#x1F4A7;&nbsp;{lawn_amount}</span>
+      </div>
+      <div class="lawn-reason">{lawn_reason}</div>
     </div>
   </div>
 
