@@ -5,6 +5,7 @@ Dependencies: requests
 """
 import json
 import sys
+import time
 from datetime import datetime
 import requests
 
@@ -15,7 +16,18 @@ if len(sys.argv) > 1:
     with open(sys.argv[1], encoding="utf-8-sig") as f:
         data = json.load(f)
 else:
-    data = requests.get(URL, timeout=15).json()
+    for attempt in range(1, 4):
+        try:
+            resp = requests.get(URL, timeout=15)
+            resp.raise_for_status()
+            data = resp.json()
+            break
+        except Exception as e:
+            print(f"Attempt {attempt} failed: {e}")
+            if attempt < 3:
+                time.sleep(5)
+    else:
+        raise SystemExit("wttr.in unavailable after 3 attempts")
 
 cur   = data["current_condition"][0]
 days  = data["weather"]  # 3 days
