@@ -475,6 +475,28 @@ HTML = f"""<!DOCTYPE html>
   .lawn-red {{ color:#dc2626; }}
   .lawn-meta {{ display:flex; flex-wrap:wrap; gap:18px; font-size:12px; color:#374151; margin-bottom:4px; font-weight:500; }}
   .lawn-reason {{ font-size:11px; color:#6b7280; line-height:1.45; }}
+  @media (max-width:680px) {{
+    body {{ padding:10px; }}
+    .header {{ padding:16px; flex-direction:column; align-items:flex-start; }}
+    .hdr-left {{ flex-wrap:wrap; }}
+    .hdr-icon {{ font-size:46px; }}
+    .hdr-temp {{ font-size:46px; }}
+    .hdr-desc {{ font-size:20px; }}
+    .hdr-right {{ min-width:unset; width:100%; text-align:left; border-top:1px solid #e2e8f0; padding-top:10px; margin-top:4px; }}
+    .conf-bar-wrap {{ max-width:160px; }}
+    .insights {{ padding:12px 16px; }}
+    .insights-grid {{ grid-template-columns:repeat(3,1fr); gap:8px; }}
+    .forecast {{ padding:12px 0 8px; }}
+    .forecast-hdr {{ padding:0 16px; margin-bottom:10px; }}
+    .fc-scroll {{ overflow-x:auto; -webkit-overflow-scrolling:touch; padding:0 16px 6px; }}
+    .day-block {{ min-width:560px; }}
+    .bottom4 {{ grid-template-columns:1fr 1fr; }}
+    .bsec:nth-child(2) {{ border-right:none; }}
+    .bsec:nth-child(1),.bsec:nth-child(2) {{ border-bottom:1px solid #e5e7eb; }}
+    .lawn-rec {{ padding:12px 16px; flex-wrap:wrap; }}
+    .story {{ padding:10px 16px 12px; }}
+    .updated {{ padding:8px 16px; }}
+  }}
 </style>
 </head>
 <body>
@@ -529,7 +551,9 @@ HTML = f"""<!DOCTYPE html>
       <h2>PROGNOZA SZCZEG&#xD3;&#x141;OWA NA 3 DNI</h2>
       <div class="fc-legend"><span>&#x1F4A7; Deszcz %</span><span>&#x1F4A8; Wiatr</span></div>
     </div>
+    <div class="fc-scroll">
     {day_blocks}
+    </div>
   </div>
 
   <div class="bottom4">
